@@ -1,0 +1,1162 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ÉLÉRA Laser Studio — лазерна епіляція медичного класу</title>
+<meta name="description" content="ÉLÉRA Laser Studio — лазерна епіляція на апараті медичного класу. Без болю, з контактним охолодженням, для всіх фототипів.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   ÉLÉRA — design tokens
+   Щоб вставити фото: знайдіть елемент з класом .ph і додайте
+   style="--img:url('photo.jpg')" — плейсхолдер зміниться на фото.
+   ========================================================= */
+:root{
+  --bg:#0A0A0A;
+  --bg-2:#111111;
+  --bg-3:#171717;
+  --line:#262626;
+  --line-2:#333333;
+  --fg:#F3F3F1;
+  --fg-2:#A3A3A3;
+  --fg-3:#8A8A8A;
+  --ice:#A8DCFF;          /* мікро-акцент холодного світла */
+  --ice-dim:rgba(168,220,255,.14);
+  --paper:#EDEDEA;        /* світлі секції */
+  --ink:#0A0A0A;
+  --ink-2:#555555;
+  --sans:'Inter Tight',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --pad:clamp(16px,3.4vw,48px);
+  --ease:cubic-bezier(.2,.7,0,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+::selection{background:var(--ice);color:var(--ink)}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.wrap{max-width:1440px;margin:0 auto;padding-inline:var(--pad)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* grain overlay */
+body::after{content:"";position:fixed;inset:-50%;pointer-events:none;z-index:100;opacity:.05;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation:grain 1.2s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}
+
+/* ---------- photo placeholder ---------- */
+.ph{position:relative;overflow:hidden;background:
+   radial-gradient(120% 80% at 70% 20%,rgba(168,220,255,.10),transparent 55%),
+   linear-gradient(160deg,#1b1b1b,#0d0d0d 70%);
+   background-color:#121212}
+.ph::before{content:"";position:absolute;inset:0;background:var(--img,none) center/cover no-repeat;filter:grayscale(1) contrast(1.1) brightness(.92);transition:transform 1.4s var(--ease)}
+.ph:hover::before{transform:scale(1.04)}
+.ph .ph-label{position:absolute;left:16px;bottom:14px;right:16px;color:var(--fg-3);display:flex;justify-content:space-between;gap:12px;z-index:2}
+.ph[style*="--img"] .ph-label{display:none}
+.ph .cross{position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background:linear-gradient(to bottom right,transparent calc(50% - .5px),#222 50%,transparent calc(50% + .5px)),
+             linear-gradient(to top right,transparent calc(50% - .5px),#222 50%,transparent calc(50% + .5px))}
+.ph[style*="--img"] .cross{display:none}
+.ph.light{background:linear-gradient(160deg,#dcdcd8,#c9c9c5);background-color:#d6d6d2}
+.ph.light .ph-label{color:#555}
+.ph.light .cross{opacity:.35;background:linear-gradient(to bottom right,transparent calc(50% - .5px),#999 50%,transparent calc(50% + .5px)),linear-gradient(to top right,transparent calc(50% - .5px),#999 50%,transparent calc(50% + .5px))}
+
+/* ---------- buttons ---------- */
+.btn{background:transparent;display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:56px;padding:0 28px;border-radius:999px;font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;border:1px solid transparent;cursor:pointer;transition:background .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease);position:relative;overflow:hidden;white-space:nowrap}
+.btn svg{transition:transform .45s var(--ease)}
+.btn:hover svg{transform:translateX(4px) rotate(-45deg)}
+.btn-w{background:var(--fg);color:var(--ink)}
+.btn-w:hover{background:var(--ice)}
+.btn-o{border-color:var(--line-2);color:var(--fg)}
+.btn-o:hover{border-color:var(--fg)}
+.btn-k{background:var(--ink);color:var(--fg)}
+.btn-k:hover{background:#262626}
+.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ice);outline-offset:3px}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .4s,border-color .4s,transform .5s var(--ease);border-bottom:1px solid transparent}
+.hdr.scrolled{background:rgba(10,10,10,.72);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-color:var(--line)}
+.hdr.hide{transform:translateY(-100%)}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;gap:24px}
+.logo{display:flex;align-items:baseline;gap:10px}
+.logo b{font-weight:900;font-size:22px;letter-spacing:-.02em}
+.logo span{color:var(--fg-3)}
+.nav{display:flex;gap:4px;align-items:center}
+.nav a{padding:10px 14px;font-size:13px;font-weight:500;color:var(--fg-2);border-radius:999px;transition:color .3s,background .3s}
+.nav a:hover{color:var(--fg);background:#1a1a1a}
+.hdr-r{display:flex;align-items:center;gap:12px}
+.hdr-r .btn{min-height:44px;padding:0 20px;font-size:12px}
+.burger{display:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);background:none;cursor:pointer;position:relative}
+.burger i{position:absolute;left:13px;right:13px;height:1.5px;background:var(--fg);transition:transform .4s var(--ease),top .4s var(--ease)}
+.burger i:nth-child(1){top:18px}.burger i:nth-child(2){top:25px}
+body.menu-open .burger i:nth-child(1){top:21px;transform:rotate(45deg)}
+body.menu-open .burger i:nth-child(2){top:21px;transform:rotate(-45deg)}
+.mnav{position:fixed;inset:0;z-index:49;background:var(--bg);padding:110px var(--pad) 40px;display:flex;flex-direction:column;justify-content:space-between;clip-path:inset(0 0 100% 0);transition:clip-path .7s var(--ease);visibility:hidden}
+body.menu-open .mnav{clip-path:inset(0 0 0 0);visibility:visible}
+body.menu-open{overflow:hidden}
+.mnav a.big{display:flex;justify-content:space-between;align-items:baseline;font-size:clamp(34px,9vw,56px);font-weight:800;letter-spacing:-.04em;line-height:1.15;border-bottom:1px solid var(--line);padding:10px 0}
+.mnav a.big .mono{color:var(--fg-3)}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;padding-top:96px;display:flex;flex-direction:column;overflow:hidden}
+.hero-grid{flex:1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;align-items:end;padding-bottom:28px}
+.hero-meta{grid-column:1/-1;display:flex;justify-content:space-between;color:var(--fg-3);padding:18px 0 0;border-top:1px solid var(--line)}
+.hero-meta .live{display:inline-flex;align-items:center;gap:8px;color:var(--fg-2)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ice);box-shadow:0 0 12px var(--ice);animation:pulse 2.2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.hero-copy{grid-column:1/8;grid-row:1;align-self:center;padding:40px 0}
+.hero-h{font-size:clamp(56px,10.4vw,168px);font-weight:900;line-height:.86;letter-spacing:-.065em;text-transform:uppercase}
+.hero-h .ln{display:block;overflow:hidden;padding-bottom:.04em}
+.hero-h .ln > span{display:inline-block;transform:translateY(105%);animation:up 1.2s var(--ease) forwards}
+.hero-h .ln:nth-child(2) > span{animation-delay:.12s}
+.hero-h .ln:nth-child(3) > span{animation-delay:.24s}
+.hero-h .out{-webkit-text-stroke:1.4px var(--fg);color:transparent}
+@keyframes up{to{transform:none}}
+.hero-sub{max-width:470px;margin-top:36px;font-size:clamp(16px,1.3vw,19px);color:var(--fg-2);line-height:1.55;opacity:0;animation:fade 1s .6s var(--ease) forwards}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px;opacity:0;animation:fade 1s .75s var(--ease) forwards}
+.hero-note{margin-top:18px;color:var(--fg-3);opacity:0;animation:fade 1s .9s var(--ease) forwards}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero-vis{grid-column:8/13;grid-row:1;align-self:stretch;position:relative;min-height:560px;border-radius:24px;opacity:0;animation:fade 1.4s .3s var(--ease) forwards}
+.hero-vis .ph{position:absolute;inset:0;border-radius:24px}
+.beam{position:absolute;left:0;right:0;height:1px;top:0;background:linear-gradient(90deg,transparent,var(--ice),transparent);box-shadow:0 0 24px 4px rgba(168,220,255,.35);animation:scan 4.5s cubic-bezier(.6,0,.4,1) infinite;z-index:3}
+.beam::after{content:"";position:absolute;left:0;right:0;top:0;height:120px;transform:translateY(-100%);background:linear-gradient(to top,rgba(168,220,255,.10),transparent)}
+@keyframes scan{0%{top:6%}50%{top:94%}100%{top:6%}}
+.hero-tag{position:absolute;z-index:4;background:rgba(10,10,10,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 14px}
+.hero-tag.t1{top:20px;left:20px}
+.hero-tag.t2{bottom:20px;right:20px;text-align:right}
+.hero-tag b{display:block;font-size:22px;font-weight:700;letter-spacing:-.02em;margin-top:2px}
+.hero-tag .mono{color:var(--fg-3)}
+.hero-cards{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:8px}
+.icard{border:1px solid var(--line);border-radius:20px;padding:22px 22px 24px;background:rgba(17,17,17,.6);display:flex;flex-direction:column;gap:18px;min-height:168px;transition:border-color .4s,background .4s;opacity:0;animation:fade 1s var(--ease) forwards}
+.icard:nth-child(1){animation-delay:1s}.icard:nth-child(2){animation-delay:1.1s}.icard:nth-child(3){animation-delay:1.2s}
+.icard:hover{border-color:#3a3a3a;background:#141414}
+.icard .top{display:flex;justify-content:space-between;color:var(--fg-3)}
+.icard .val{font-size:clamp(28px,2.6vw,40px);font-weight:800;letter-spacing:-.04em;line-height:1}
+.icard .val small{font-size:.5em;color:var(--ice);font-weight:600;letter-spacing:0;margin-left:4px}
+.icard p{color:var(--fg-2);font-size:14px;line-height:1.5;max-width:360px}
+
+/* marquee */
+.marq{border-block:1px solid var(--line);overflow:hidden;padding:20px 0;background:var(--bg)}
+.marq-track{display:flex;width:max-content;animation:marq 38s linear infinite}
+.marq:hover .marq-track{animation-play-state:paused}
+.marq span{font-size:clamp(28px,4vw,56px);font-weight:800;letter-spacing:-.04em;text-transform:uppercase;padding-right:48px;display:flex;align-items:center;gap:48px;white-space:nowrap}
+.marq span::after{content:"";width:12px;height:12px;border-radius:50%;border:1.5px solid var(--fg-3)}
+.marq span:nth-child(even){-webkit-text-stroke:1px var(--fg-2);color:transparent}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* =========================================================
+   SECTION SHELL
+   ========================================================= */
+section{position:relative}
+.sec{padding:clamp(88px,11vw,160px) 0}
+.sec-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-bottom:clamp(40px,5vw,72px);align-items:end}
+.sec-idx{grid-column:1/4;color:var(--fg-3);display:flex;gap:14px;align-items:center}
+.sec-idx::before{content:"";width:28px;height:1px;background:currentColor}
+.sec-title{grid-column:4/-1;font-size:clamp(44px,7vw,112px);font-weight:900;line-height:.88;letter-spacing:-.06em;text-transform:uppercase}
+.sec-title .out{-webkit-text-stroke:1.2px var(--fg);color:transparent}
+.light .sec-title .out,.light .b h3 .out{-webkit-text-stroke-color:var(--ink)}
+.sec-lead{grid-column:4/10;color:var(--fg-2);font-size:clamp(16px,1.3vw,19px);margin-top:24px;max-width:600px}
+.light{background:var(--paper);color:var(--ink)}
+.light .sec-idx,.light .mono.mut{color:#5c5c5c}
+.light .sec-lead{color:var(--ink-2)}
+
+/* =========================================================
+   02 ABOUT
+   ========================================================= */
+.about-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.about-statement{grid-column:1/-1;font-size:clamp(28px,3.8vw,58px);font-weight:600;line-height:1.08;letter-spacing:-.04em;margin-bottom:clamp(56px,7vw,110px)}
+.about-statement em{font-style:normal;color:#8c8c8c}
+.about-statement .pill{display:inline-block;vertical-align:middle;width:clamp(70px,8vw,130px);height:clamp(40px,4.4vw,70px);border-radius:999px;margin:0 .1em;position:relative;top:-.06em}
+.about-ph1{grid-column:1/6;aspect-ratio:4/5;border-radius:24px}
+.about-mid{grid-column:6/9;display:flex;flex-direction:column;justify-content:space-between;gap:32px;padding:4px 0}
+.about-mid p{font-size:16px;line-height:1.6;color:var(--ink-2)}
+.about-mid p strong{color:var(--ink);font-weight:600}
+.about-ph2{grid-column:9/13;aspect-ratio:3/4;border-radius:24px;align-self:end}
+.stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #cfcfcb;margin-top:clamp(48px,6vw,88px)}
+.stat{padding:28px 20px 0 0;border-right:1px solid #cfcfcb}
+.stat:last-child{border-right:0}
+.stat + .stat{padding-left:20px}
+.stat b{display:block;font-size:clamp(40px,5vw,80px);font-weight:900;letter-spacing:-.06em;line-height:1}
+.stat span{display:block;margin-top:10px;color:#5c5c5c}
+
+/* =========================================================
+   03 ZONES
+   ========================================================= */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.tab{min-height:44px;padding:0 20px;border-radius:999px;border:1px solid var(--line-2);background:none;cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-2);transition:all .3s var(--ease)}
+.tab:hover{color:var(--fg);border-color:#555}
+.tab[aria-pressed="true"]{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.zones{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.zone{position:relative;border-radius:22px;overflow:hidden;background:var(--bg-2);border:1px solid var(--line);display:flex;flex-direction:column;transition:opacity .45s var(--ease),transform .45s var(--ease),border-color .4s}
+.zone:hover{border-color:#3a3a3a}
+.zone.off{display:none}
+.zone .ph{aspect-ratio:4/5}
+.zone-body{padding:20px 20px 22px;display:flex;flex-direction:column;gap:12px;flex:1}
+.zone-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.zone h3{font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.05}
+.zone .code{color:var(--fg-3)}
+.zone p{font-size:14px;color:var(--fg-2);line-height:1.5}
+.zone-foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.zone-foot .mono{color:var(--fg-2)}
+.add{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);background:none;cursor:pointer;display:grid;place-items:center;transition:all .35s var(--ease)}
+.add:hover{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.add.on{background:var(--ice);color:var(--ink);border-color:var(--ice)}
+.add.on svg{transform:rotate(45deg)}
+.add svg{transition:transform .35s var(--ease)}
+.zone.wide{grid-column:span 2}
+.zone.wide .ph{aspect-ratio:auto;flex:1;min-height:280px}
+
+/* sets */
+.sets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:clamp(64px,7vw,110px)}
+.sets-h{grid-column:1/-1;display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:8px;flex-wrap:wrap}
+.sets-h h3{font-size:clamp(36px,4.6vw,72px);font-weight:900;letter-spacing:-.06em;line-height:.9;text-transform:uppercase}
+.sets-h p{color:var(--fg-2);max-width:380px}
+.set{border-radius:24px;border:1px solid var(--line);padding:28px;display:flex;flex-direction:column;gap:22px;min-height:440px;position:relative;overflow:hidden;transition:transform .5s var(--ease),border-color .4s}
+.set:hover{transform:translateY(-6px);border-color:#444}
+.set .size{font-size:clamp(120px,13vw,200px);font-weight:900;letter-spacing:-.08em;line-height:.75;margin-top:6px}
+.set .nm{display:flex;justify-content:space-between;color:var(--fg-3)}
+.set ul{list-style:none;display:flex;flex-direction:column;gap:0}
+.set li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.set li span:last-child{color:var(--fg-3);font-family:var(--mono);font-size:12px}
+.set .desc{color:var(--fg-2);font-size:14px}
+.set .btm{margin-top:auto;display:flex;justify-content:space-between;align-items:end;gap:12px}
+.set .price{font-size:28px;font-weight:700;letter-spacing:-.03em}
+.set .price small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--fg-3);font-weight:400;margin-bottom:4px}
+.set.hot{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.set.hot .nm,.set.hot li span:last-child,.set.hot .price small{color:#5a5a5a}
+.set.hot .desc{color:#444}
+.set.hot li{border-color:#cfcfcb}
+.badge{position:absolute;top:24px;right:24px;background:var(--ink);color:var(--fg);padding:7px 12px;border-radius:999px}
+
+/* =========================================================
+   04 HARDWARE
+   ========================================================= */
+.hw{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.hw-vis{grid-column:1/8;border-radius:28px;min-height:640px;position:relative;overflow:hidden}
+.hw-vis .ph{position:absolute;inset:0}
+.hw-vis .ph::after,.hero-vis .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.75),transparent 45%)}
+.wl{position:absolute;left:24px;right:24px;bottom:24px;z-index:3;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.wl button{min-height:72px;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:rgba(10,10,10,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);cursor:pointer;text-align:left;padding:12px 14px;transition:all .35s var(--ease)}
+.wl button b{display:block;font-size:22px;font-weight:700;letter-spacing:-.02em}
+.wl button .mono{color:var(--fg-3)}
+.wl button[aria-pressed="true"]{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.wl button[aria-pressed="true"] .mono{color:#555}
+.hw-name{position:absolute;top:24px;left:24px;right:24px;z-index:3;display:flex;justify-content:space-between;color:var(--fg-2)}
+.rings{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:2;pointer-events:none}
+.rings i{position:absolute;left:50%;top:50%;border:1px solid rgba(168,220,255,.35);border-radius:50%;transform:translate(-50%,-50%);animation:ring 3.6s var(--ease) infinite}
+.rings i:nth-child(2){animation-delay:1.2s}.rings i:nth-child(3){animation-delay:2.4s}
+@keyframes ring{0%{width:20px;height:20px;opacity:1}100%{width:420px;height:420px;opacity:0}}
+.rings b{position:absolute;left:50%;top:50%;width:10px;height:10px;border-radius:50%;background:var(--ice);transform:translate(-50%,-50%);box-shadow:0 0 30px 8px rgba(168,220,255,.5)}
+.hw-info{grid-column:8/13;display:flex;flex-direction:column;gap:16px}
+.hw-panel{border:1px solid var(--line);border-radius:24px;padding:28px;background:var(--bg-2)}
+.hw-panel h3{font-size:clamp(32px,3.4vw,52px);font-weight:900;letter-spacing:-.05em;line-height:.9;text-transform:uppercase}
+.hw-panel .wl-text{margin-top:18px;color:var(--fg-2);min-height:72px;transition:opacity .3s}
+.spec{display:grid;grid-template-columns:1fr auto;border-top:1px solid var(--line);margin-top:22px}
+.spec div{padding:12px 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.spec div:nth-child(odd){color:var(--fg-3)}
+.spec div:nth-child(even){text-align:right}
+.principles{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:24px;overflow:hidden}
+.pr{padding:22px 24px;display:grid;grid-template-columns:44px 1fr;gap:12px;border-bottom:1px solid var(--line)}
+.pr:last-child{border-bottom:0}
+.pr .mono{color:var(--ice);padding-top:4px}
+.pr h4{font-size:16px;font-weight:700;letter-spacing:.02em;text-transform:uppercase}
+.pr p{color:var(--fg-2);font-size:14px;margin-top:6px}
+
+/* =========================================================
+   05 BENTO — advantages
+   ========================================================= */
+.bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(260px,auto);gap:16px}
+.b{border-radius:24px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;position:relative;overflow:hidden;background:#fff;border:1px solid #d9d9d5;transition:transform .5s var(--ease)}
+.b:hover{transform:translateY(-4px)}
+.b h3{font-size:clamp(28px,2.8vw,44px);font-weight:900;letter-spacing:-.05em;line-height:.92;text-transform:uppercase}
+.b p{color:var(--ink-2);font-size:15px;max-width:440px}
+.b .tags{display:flex;flex-wrap:wrap;gap:6px}
+.b .tags span{border:1px solid #cfcfcb;border-radius:999px;padding:7px 11px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.b .k{color:#5c5c5c}
+.b-a{grid-column:span 2;grid-row:span 2;background:var(--ink);color:var(--fg);border-color:var(--ink)}
+.b-a p{color:var(--fg-2)}
+.b-a .tags span{border-color:#333}
+.b-a .k{color:var(--fg-3)}
+.b-a .ph{position:absolute;inset:0;opacity:.4}
+.b-a > *:not(.ph){position:relative;z-index:2}
+.b-b{grid-column:span 2}
+.b-c,.b-d{grid-column:span 1}
+.b-c .big,.b-d .big{font-size:clamp(56px,6vw,96px);font-weight:900;letter-spacing:-.07em;line-height:.85}
+.b-c .big small,.b-d .big small{font-size:.35em;letter-spacing:-.02em}
+.b-e{grid-column:1/-1;background:var(--ice);border-color:var(--ice);flex-direction:row;align-items:end;flex-wrap:wrap}
+.b-e .nums{display:grid;grid-template-columns:repeat(4,minmax(0,auto));gap:clamp(20px,4vw,64px)}
+.b-e .nums b{display:block;font-size:clamp(40px,5vw,76px);font-weight:900;letter-spacing:-.06em;line-height:.9}
+.b-e .nums span{color:#2a4a5c}
+.b-e p{color:#1f3a48}
+.therm{position:relative;height:6px;border-radius:6px;background:#e7e7e3;overflow:hidden}
+.therm i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--ink);border-radius:6px;transition:width 1.8s var(--ease)}
+.in .therm i{width:var(--w)}
+
+/* =========================================================
+   06 TEAM
+   ========================================================= */
+.team{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.member{display:flex;flex-direction:column;gap:16px}
+.member .ph{aspect-ratio:3/4;border-radius:24px}
+.member:nth-child(2){margin-top:clamp(0px,8vw,120px)}
+.member .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.member h3{font-size:clamp(22px,2vw,30px);font-weight:700;letter-spacing:-.03em}
+.member .role{color:var(--fg-3)}
+.member p{color:var(--fg-2);font-size:14px;max-width:380px}
+.member .chips{display:flex;flex-wrap:wrap;gap:6px}
+.member .chips span{border:1px solid var(--line-2);border-radius:999px;padding:6px 10px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2)}
+
+/* =========================================================
+   07 PRICE
+   ========================================================= */
+.price-wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.price-side{grid-column:1/5;display:flex;flex-direction:column;gap:20px;position:sticky;top:100px;align-self:start}
+.price-side p{color:var(--ink-2)}
+.seg{display:inline-flex;border:1px solid #cfcfcb;border-radius:999px;padding:4px;gap:4px;align-self:flex-start}
+.seg button{min-height:44px;padding:0 18px;border-radius:999px;border:0;background:none;cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#555;transition:all .3s var(--ease)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--fg)}
+.ptable{grid-column:5/-1}
+.pgroup{margin-bottom:40px}
+.pgroup h4{display:flex;justify-content:space-between;padding-bottom:12px;border-bottom:1.5px solid var(--ink);color:#555}
+.prow{display:grid;grid-template-columns:1fr auto auto;gap:24px;align-items:baseline;padding:18px 0;border-bottom:1px solid #cfcfcb;transition:padding .35s var(--ease),background .35s}
+.prow:hover{padding-inline:12px;background:#e3e3df}
+.prow .n{font-size:clamp(18px,1.6vw,22px);font-weight:600;letter-spacing:-.02em}
+.prow .t{color:#5c5c5c}
+.prow .v{font-size:clamp(18px,1.6vw,22px);font-weight:700;letter-spacing:-.02em;min-width:120px;text-align:right}
+.pnote{color:#5c5c5c;margin-top:8px}
+
+/* =========================================================
+   08 REVIEWS
+   ========================================================= */
+.rev-top{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:28px;flex-wrap:wrap}
+.rev-nav{display:flex;gap:8px}
+.rev-nav button{width:56px;height:56px;border-radius:50%;border:1px solid var(--line-2);background:none;cursor:pointer;display:grid;place-items:center;transition:all .3s var(--ease)}
+.rev-nav button:hover{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.rev-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.rev-track::-webkit-scrollbar{display:none}
+.rev{flex:0 0 clamp(300px,36vw,520px);scroll-snap-align:start;border:1px solid var(--line);border-radius:24px;padding:32px;display:flex;flex-direction:column;justify-content:space-between;gap:40px;min-height:380px;background:var(--bg-2)}
+.rev q{font-size:clamp(20px,1.9vw,28px);font-weight:500;line-height:1.25;letter-spacing:-.025em;quotes:none}
+.rev q.ph-text{color:#777}
+.rev .who{display:flex;align-items:center;gap:14px;border-top:1px solid var(--line);padding-top:20px}
+.rev .ava{width:48px;height:48px;border-radius:50%;flex:none}
+.rev .who b{display:block;font-weight:600}
+.rev .who .mono{color:var(--fg-3)}
+.rev .stars{margin-left:auto;display:flex;gap:2px;color:var(--fg)}
+.rev.wide-q{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.rev.wide-q .who{border-color:#cfcfcb}
+.rev.wide-q .who .mono{color:#555}
+.rev.wide-q .stars{color:var(--ink)}
+.rev.wide-q q.ph-text{color:#666}
+
+/* =========================================================
+   09 FAQ
+   ========================================================= */
+.faq{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.faq-list{grid-column:4/-1;border-top:1px solid var(--line)}
+.qa{border-bottom:1px solid var(--line)}
+.qa button{width:100%;display:grid;grid-template-columns:56px 1fr 44px;gap:12px;align-items:center;text-align:left;background:none;border:0;cursor:pointer;padding:26px 0;min-height:44px}
+.qa button .mono{color:var(--fg-3)}
+.qa button .q{font-size:clamp(20px,2.2vw,32px);font-weight:600;letter-spacing:-.03em;line-height:1.1;transition:color .3s}
+.qa button:hover .q{color:var(--ice)}
+.qa .pm{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);position:relative;transition:all .4s var(--ease)}
+.qa .pm::before,.qa .pm::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:1.5px;background:currentColor;transform:translate(-50%,-50%);transition:transform .4s var(--ease)}
+.qa .pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+.qa.open .pm{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.qa.open .pm::after{transform:translate(-50%,-50%) rotate(0)}
+.qa .ans{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease)}
+.qa.open .ans{grid-template-rows:1fr}
+.qa .ans > div{overflow:hidden}
+.qa .ans p{padding:0 56px 28px 68px;color:var(--fg-2);max-width:820px;font-size:16px}
+
+/* =========================================================
+   10 BOOKING + FOOTER
+   ========================================================= */
+.book{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.book-l{grid-column:1/6;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.book-l h2{font-size:clamp(52px,7.6vw,124px);font-weight:900;letter-spacing:-.065em;line-height:.85;text-transform:uppercase}
+.book-l h2 .out{-webkit-text-stroke:1.2px var(--fg);color:transparent}
+.book-l p{color:var(--fg-2);max-width:420px;margin-top:24px}
+.contacts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-top:1px solid var(--line)}
+.contacts div{padding:18px 16px 18px 0;border-bottom:1px solid var(--line)}
+.contacts .mono{color:var(--fg-3);display:block;margin-bottom:6px}
+.contacts a,.contacts span.v{font-size:16px;font-weight:500}
+.contacts a:hover{color:var(--ice)}
+.form{grid-column:7/-1;border:1px solid var(--line);border-radius:28px;padding:clamp(22px,3vw,40px);background:var(--bg-2);display:flex;flex-direction:column;gap:22px;position:relative}
+.fld{display:flex;flex-direction:column;gap:8px}
+.fld label,.fld .lbl{color:var(--fg-3)}
+.fld input,.fld select{width:100%;min-height:56px;border:0;border-bottom:1px solid var(--line-2);background:transparent;font-size:20px;font-weight:500;letter-spacing:-.01em;padding:8px 0;outline:none;transition:border-color .3s;border-radius:0;-webkit-appearance:none;appearance:none}
+.fld input::placeholder{color:#5e5e5e}
+.fld input:focus,.fld select:focus{border-color:var(--ice)}
+.fld select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23A3A3A3' stroke-width='1.5'><path d='M2 5l5 5 5-5'/></svg>");background-repeat:no-repeat;background-position:right 4px center;cursor:pointer}
+.fld select option{background:#111;color:#fff}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill-b{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line-2);background:none;cursor:pointer;font-size:14px;font-weight:500;transition:all .3s var(--ease)}
+.pill-b:hover{border-color:#666}
+.pill-b[aria-pressed="true"]{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.chk{display:flex;gap:12px;align-items:flex-start;color:var(--fg-2);font-size:13px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--ice);margin-top:1px;flex:none}
+.form .submit{width:100%;min-height:64px;font-size:14px}
+.err{color:#ffb4a8;font-size:13px;min-height:18px}
+.done{position:absolute;inset:0;border-radius:28px;background:var(--fg);color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(22px,3vw,40px);opacity:0;pointer-events:none;transform:scale(.98);transition:all .6s var(--ease)}
+.form.sent .done{opacity:1;pointer-events:auto;transform:none}
+.done h3{font-size:clamp(44px,5vw,80px);font-weight:900;letter-spacing:-.06em;line-height:.88;text-transform:uppercase}
+.done p{color:#444;max-width:420px;margin-top:16px}
+
+.foot{border-top:1px solid var(--line);padding-top:48px;overflow:hidden}
+.foot-row{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;color:var(--fg-3)}
+.foot-row > div{display:flex;flex-direction:column;gap:10px}
+.foot-row a{color:var(--fg-2);font-size:14px;transition:color .3s}
+.foot-row a:hover{color:var(--fg)}
+.foot-row .c1{grid-column:1/5}.foot-row .c2{grid-column:5/7}.foot-row .c3{grid-column:7/9}.foot-row .c4{grid-column:9/-1;align-items:flex-end;text-align:right}
+.wordmark{font-size:clamp(80px,24.5vw,380px);font-weight:900;letter-spacing:-.08em;line-height:.95;padding-top:.08em;text-align:center;margin-top:40px;white-space:nowrap;user-select:none;background:linear-gradient(to bottom,var(--fg) 30%,#2a2a2a);-webkit-background-clip:text;background-clip:text;color:transparent;transform:translateY(14%)}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width:1100px){
+  .nav{display:none}
+  .burger{display:block}
+  .hero-copy{grid-column:1/-1;padding-bottom:16px}
+  .hero-copy{grid-row:auto}
+  .hero-vis{grid-column:1/-1;grid-row:auto;min-height:420px}
+  .hero-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .zones{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sets{grid-template-columns:1fr}
+  .set{min-height:auto}
+  .hw-vis,.hw-info{grid-column:1/-1}
+  .hw-vis{min-height:520px}
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .b-a{grid-column:1/-1;grid-row:auto;min-height:440px}
+  .b-b{grid-column:1/-1}
+  .price-side{grid-column:1/-1;position:static}
+  .ptable{grid-column:1/-1}
+  .faq-list{grid-column:1/-1}
+  .book-l,.form{grid-column:1/-1}
+  .about-ph1{grid-column:1/7}.about-mid{grid-column:7/-1}.about-ph2{display:none}
+}
+@media (max-width:720px){
+  .hdr .wrap{height:64px}
+  .hdr-r .btn{display:none}
+  .hdr-r > a.mono{display:none}
+  .hero-vis .ph-label{display:none}
+  .hero{padding-top:80px}
+  .hero-meta .hide-sm{display:none}
+  .hero-h{font-size:clamp(50px,15.5vw,96px)}
+  .hero-cta .btn{flex:1 1 100%}
+  .hero-vis{min-height:380px}
+  .hero-cards{grid-template-columns:1fr;gap:10px}
+  .icard{min-height:auto;flex-direction:row;align-items:center;gap:16px;padding:18px}
+  .icard .top{flex-direction:column;gap:4px}
+  .icard p{display:none}
+  .icard .val{margin-left:auto;text-align:right}
+  .sec-head{display:block}
+  .sec-idx{margin-bottom:18px}
+  .sec-title{font-size:clamp(42px,13vw,72px)}
+  .about-ph1,.about-mid{grid-column:1/-1}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stat{padding:22px 12px 22px 0;border-bottom:1px solid #cfcfcb}
+  .stat:nth-child(2n){border-right:0}
+  .stat + .stat{padding-left:12px}
+  .stat:nth-child(3){padding-left:0}
+  .zones{grid-template-columns:1fr}
+  .zone.wide{grid-column:auto}
+  .zone .ph{aspect-ratio:16/11}
+  .zone.wide .ph{min-height:0;aspect-ratio:16/11}
+  .wl button b{font-size:17px}
+  .bento{grid-template-columns:1fr}
+  .b-c,.b-d{grid-column:auto}
+  .b-e .nums{grid-template-columns:repeat(2,minmax(0,auto))}
+  .team{grid-template-columns:1fr;gap:48px}
+  .member:nth-child(2){margin-top:0}
+  .prow{grid-template-columns:1fr auto;gap:4px 16px}
+  .prow .t{grid-column:1;grid-row:2}
+  .prow .v{grid-row:1/3;grid-column:2;align-self:center;min-width:0}
+  .qa button{grid-template-columns:36px 1fr 44px}
+  .qa .ans p{padding:0 0 24px 48px}
+  .two{grid-template-columns:1fr}
+  .rev{padding:24px;min-height:320px}
+  .rev .who{flex-wrap:wrap}
+  .rev .stars{margin-left:0;flex-basis:100%}
+  .contacts{grid-template-columns:1fr}
+  .foot-row .c1,.foot-row .c2,.foot-row .c3,.foot-row .c4{grid-column:1/-1;align-items:flex-start;text-align:left}
+  .marq{padding:14px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a href="#top" class="logo" aria-label="ÉLÉRA Laser Studio — на початок">
+      <b>ÉLÉRA</b><span class="mono">Laser&nbsp;Studio</span>
+    </a>
+    <nav class="nav" aria-label="Основна навігація">
+      <a href="#about">Студія</a>
+      <a href="#zones">Зони</a>
+      <a href="#hardware">Апарат</a>
+      <a href="#team">Команда</a>
+      <a href="#price">Прайс</a>
+      <a href="#reviews">Відгуки</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="hdr-r">
+      <a href="tel:+380000000000" class="mono" style="color:var(--fg-2)" aria-label="Подзвонити">[+380 00 000 00 00]</a>
+      <a href="#book" class="btn btn-w">Записатись</a>
+      <button class="burger" id="burger" aria-label="Відкрити меню" aria-expanded="false" aria-controls="mnav"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<div class="mnav" id="mnav" aria-hidden="true">
+  <div>
+    <a class="big" href="#about">Студія <span class="mono">01</span></a>
+    <a class="big" href="#zones">Зони <span class="mono">02</span></a>
+    <a class="big" href="#hardware">Апарат <span class="mono">03</span></a>
+    <a class="big" href="#team">Команда <span class="mono">05</span></a>
+    <a class="big" href="#price">Прайс <span class="mono">06</span></a>
+    <a class="big" href="#faq">FAQ <span class="mono">08</span></a>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <a href="#book" class="btn btn-w" style="width:100%">Записатись на сеанс</a>
+    <div class="mono" style="color:var(--fg-3);display:flex;justify-content:space-between"><span>[Київ, вул. Адреса, 00]</span><span>09:00—21:00</span></div>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ===================== 00 HERO ===================== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1 class="hero-h">
+        <span class="ln"><span>Skin.</span></span>
+        <span class="ln"><span class="out">Nothing</span></span>
+        <span class="ln"><span>Else.</span></span>
+      </h1>
+      <p class="hero-sub">Лазерна епіляція на апараті медичного класу. Курс, після якого бритва більше не потрібна — без болю, без поспіху, без компромісів.</p>
+      <div class="hero-cta">
+        <a href="#book" class="btn btn-w">Записатись на сеанс
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+        <a href="#price" class="btn btn-o">Дізнатись ціни</a>
+      </div>
+      <p class="hero-note mono">Консультація та тест-спалах — безкоштовно</p>
+    </div>
+
+    <div class="hero-vis">
+      <div style="--img:url('https://images.unsplash.com/photo-1638638977172-9f7169a77930?w=1400&q=80&auto=format&fit=crop')" class="ph" role="img" aria-label="Портрет жінки із закритими очима в темряві">
+        <div class="cross"></div>
+        <div class="ph-label mono"><span>[Photo / hero — model + handpiece]</span><span>4:5</span></div>
+      </div>
+      <div class="beam" aria-hidden="true"></div>
+      <div class="hero-tag t1"><span class="mono">Wavelength</span><b>755 · 810 · 1064</b></div>
+      <div class="hero-tag t2"><span class="mono">Phototypes</span><b>I — VI</b></div>
+    </div>
+
+    <div class="hero-cards">
+      <article class="icard">
+        <div class="top mono"><span>01 / Cooling</span><span>Sapphire</span></div>
+        <div class="val">[-4]<small>°C</small></div>
+        <p>Контактне охолодження сапфіровим наконечником — до, під час і після імпульсу.</p>
+      </article>
+      <article class="icard">
+        <div class="top mono"><span>02 / Comfort</span><span>Protocol</span></div>
+        <div class="val">No pain</div>
+        <p>Відчуття — легке тепло. Без анестезії й кремів-«заморозок».</p>
+      </article>
+      <article class="icard">
+        <div class="top mono"><span>03 / Hardware</span><span>Medical</span></div>
+        <div class="val">Diode<small>×3</small></div>
+        <p>Три довжини хвилі в одному імпульсі — для будь-якого фототипу й волосся.</p>
+      </article>
+    </div>
+
+    <div class="hero-meta mono">
+      <span class="live"><i class="dot"></i>Запис відкрито</span>
+      <span class="hide-sm">[Київ] — Est. [2024]</span>
+      <span>Scroll ↓</span>
+    </div>
+  </div>
+</section>
+
+<div class="marq" aria-hidden="true">
+  <div class="marq-track">
+    <span>Zero hair</span><span>Zero noise</span><span>Medical grade</span><span>Cold touch</span><span>Clean by design</span><span>Phototypes I—VI</span>
+    <span>Zero hair</span><span>Zero noise</span><span>Medical grade</span><span>Cold touch</span><span>Clean by design</span><span>Phototypes I—VI</span>
+  </div>
+</div>
+
+<!-- ===================== 01 ABOUT ===================== -->
+<section class="sec light" id="about">
+  <div class="wrap about-grid">
+    <div class="sec-idx mono rv" style="grid-column:1/-1;margin-bottom:28px">01 — Studio</div>
+    <p class="about-statement rv">
+      ÉLÉRA — студія, де лазер — це <span style="--img:url('https://images.unsplash.com/photo-1791099194889-4bc9ff6a1ddc?w=400&q=80&auto=format&fit=crop')" class="pill ph light" aria-hidden="true"><span class="cross"></span></span> інженерія, а не салонна процедура. <em>Ми прибираємо волосся так само точно, як хірург тримає скальпель:</em> за протоколом, з охолодженням і без імпровізацій.
+    </p>
+    <div style="--img:url('https://images.unsplash.com/photo-1731355774353-4131a8e13e55?w=1200&q=80&auto=format&fit=crop')" class="about-ph1 ph light rv" role="img" aria-label="Фото інтер'єру студії">
+      <div class="cross"></div><div class="ph-label mono"><span>[Photo / interior — procedure room]</span><span>4:5</span></div>
+    </div>
+    <div class="about-mid rv d1">
+      <p class="mono mut">Philosophy</p>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <p><strong>Стерильний простір.</strong> Мінімум декору, максимум контролю. Одноразові витратні матеріали й стерилізація після кожного клієнта.</p>
+        <p><strong>Лікарський огляд.</strong> Перед курсом — консультація, визначення фототипу й тест-спалах на кожній новій зоні.</p>
+        <p><strong>Тиша замість поспіху.</strong> Один кабінет — один клієнт. Без черг, без зайвих розмов, без продажу непотрібного.</p>
+      </div>
+      <a href="#book" class="btn btn-k" style="align-self:flex-start">Консультація
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+    </div>
+    <div style="--img:url('https://images.unsplash.com/photo-1761819922058-d15028ed9817?w=1000&q=80&auto=format&fit=crop')" class="about-ph2 ph light rv d2" role="img" aria-label="Детальне фото апарата">
+      <div class="cross"></div><div class="ph-label mono"><span>[Photo / detail]</span><span>3:4</span></div>
+    </div>
+    <div class="stats rv">
+      <div class="stat"><b>[0000]+</b><span class="mono">Процедур проведено</span></div>
+      <div class="stat"><b>6–10</b><span class="mono">Сеансів на курс</span></div>
+      <div class="stat"><b>I–VI</b><span class="mono">Фототипи шкіри</span></div>
+      <div class="stat"><b>[00] хв</b><span class="mono">Пахви, один сеанс</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 02 ZONES ===================== -->
+<section class="sec" id="zones">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-idx mono rv">02 — Zones</div>
+      <h2 class="sec-title rv d1">Select <span class="out">your</span> zone</h2>
+      <p class="sec-lead rv d2">Окремі зони або комплекс за один візит. Додайте зони кнопкою «+» — вони одразу з'являться у формі запису.</p>
+    </div>
+
+    <div class="tabs rv" role="group" aria-label="Фільтр зон">
+      <button class="tab" data-f="all" aria-pressed="true">All</button>
+      <button class="tab" data-f="face" aria-pressed="false">Face</button>
+      <button class="tab" data-f="body" aria-pressed="false">Body</button>
+      <button class="tab" data-f="intim" aria-pressed="false">Bikini</button>
+    </div>
+
+    <div class="zones">
+      <article class="zone wide rv" data-c="body">
+        <div style="--img:url('https://images.unsplash.com/photo-1567473013244-8dae609519e9?w=1400&q=80&auto=format&fit=crop')" class="ph" role="img" aria-label="Фото: ноги"><div class="cross"></div><div class="ph-label mono"><span>[Photo / legs]</span><span>Z—01</span></div></div>
+        <div class="zone-body">
+          <div class="zone-row"><h3>Ноги повністю</h3><span class="code mono">Z—01</span></div>
+          <p>Велика площа — швидкий наконечник. Від щиколоток до стегон за один сеанс.</p>
+          <div class="zone-foot"><span class="mono">~40 min · [0000] ₴</span>
+            <button class="add" data-z="Ноги" aria-label="Додати «Ноги повністю» до запису" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 1v12M1 7h12"/></svg></button></div>
+        </div>
+      </article>
+      <article class="zone rv d1" data-c="body">
+        <div style="--img:url('https://images.unsplash.com/photo-1606143412458-acc5f86de897?w=900&q=80&auto=format&fit=crop')" class="ph" role="img" aria-label="Фото: пахви"><div class="cross"></div><div class="ph-label mono"><span>[Photo / armpits]</span><span>Z—02</span></div></div>
+        <div class="zone-body">
+          <div class="zone-row"><h3>Пахви</h3><span class="code mono">Z—02</span></div>
+          <p>Найшвидша зона з найпомітнішим результатом. Без вростання й темних крапок після гоління.</p>
+          <div class="zone-foot"><span class="mono">~10 min · [000] ₴</span>
+            <button class="add" data-z="Пахви" aria-label="Додати «Пахви» до запису" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 1v12M1 7h12"/></svg></button></div>
+        </div>
+      </article>
+      <article class="zone rv d2" data-c="intim">
+        <div style="--img:url('https://images.unsplash.com/photo-1570454564834-efe597f09fe4?w=900&q=80&auto=format&fit=crop')" class="ph" role="img" aria-label="Фото: зона бікіні, делікатна зйомка"><div class="cross"></div><div class="ph-label mono"><span>[Photo / bikini]</span><span>Z—03</span></div></div>
+        <div class="zone-body">
+          <div class="zone-row"><h3>Глибоке бікіні</h3><span class="code mono">Z—03</span></div>
+          <p>Делікатна зона — жорсткий протокол стерильності. Окреме охолодження й одноразові матеріали.</p>
+          <div class="zone-foot"><span class="mono">~20 min · [000] ₴</span>
+            <button class="add" data-z="Глибоке бікіні" aria-label="Додати «Глибоке бікіні» до запису" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 1v12M1 7h12"/></svg></button></div>
+        </div>
+      </article>
+      <article class="zone rv" data-c="face">
+        <div style="--img:url('https://images.unsplash.com/photo-1778517436057-4ed5f9fe95bd?w=900&q=80&auto=format&fit=crop')" class="ph" role="img" aria-label="Фото: обличчя"><div class="cross"></div><div class="ph-label mono"><span>[Photo / face]</span><span>Z—04</span></div></div>
+        <div class="zone-body">
+          <div class="zone-row"><h3>Обличчя</h3><span class="code mono">Z—04</span></div>
+          <p>Верхня губа, підборіддя, вилиці. Мінімальна потужність, максимальна точність.</p>
+          <div class="zone-foot"><span class="mono">5–15 min · [000] ₴</span>
+            <button class="add" data-z="Обличчя" aria-label="Додати «Обличчя» до запису" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 1v12M1 7h12"/></svg></button></div>
+        </div>
+      </article>
+      <article class="zone rv d1" data-c="body">
+        <div style="--img:url('https://images.unsplash.com/photo-1780344500866-e7404ed4fd57?w=900&q=80&auto=format&fit=crop')" class="ph" role="img" aria-label="Фото: руки"><div class="cross"></div><div class="ph-label mono"><span>[Photo / arms]</span><span>Z—05</span></div></div>
+        <div class="zone-body">
+          <div class="zone-row"><h3>Руки</h3><span class="code mono">Z—05</span></div>
+          <p>До ліктя або повністю. Рівномірний результат без «острівців».</p>
+          <div class="zone-foot"><span class="mono">~20 min · [000] ₴</span>
+            <button class="add" data-z="Руки" aria-label="Додати «Руки» до запису" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 1v12M1 7h12"/></svg></button></div>
+        </div>
+      </article>
+      <article class="zone wide rv d2" data-c="body">
+        <div style="--img:url('https://images.unsplash.com/photo-1541980162-7db2c25d5b3b?w=1400&q=80&auto=format&fit=crop')" class="ph" role="img" aria-label="Фото: спина"><div class="cross"></div><div class="ph-label mono"><span>[Photo / back]</span><span>Z—06</span></div></div>
+        <div class="zone-body">
+          <div class="zone-row"><h3>Спина / Живіт</h3><span class="code mono">Z—06</span></div>
+          <p>Для жінок і чоловіків. Великий спот — коротка процедура.</p>
+          <div class="zone-foot"><span class="mono">~30 min · [000] ₴</span>
+            <button class="add" data-z="Спина / Живіт" aria-label="Додати «Спина / Живіт» до запису" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 1v12M1 7h12"/></svg></button></div>
+        </div>
+      </article>
+    </div>
+
+    <!-- SETS -->
+    <div class="sets">
+      <div class="sets-h rv">
+        <h3>Best<br>sellers</h3>
+        <p>Комплекси вигідніші, ніж по одній зоні, і швидші — усе за один візит.</p>
+      </div>
+      <article class="set rv">
+        <div class="nm mono"><span>Set — Essential</span><span>~30 min</span></div>
+        <div class="size">S</div>
+        <ul><li><span>Пахви</span><span>Z—02</span></li><li><span>Глибоке бікіні</span><span>Z—03</span></li></ul>
+        <p class="desc">База, з якої починає більшість. Дві зони, які дратують найчастіше, — за пів години.</p>
+        <div class="btm"><div class="price"><small>From / session</small>[0000] ₴</div>
+          <button class="btn btn-o set-pick" data-z="SET S" style="min-height:48px;padding:0 20px">Обрати</button></div>
+      </article>
+      <article class="set rv d1">
+        <div class="nm mono"><span>Set — Daily</span><span>~45 min</span></div>
+        <div class="size">M</div>
+        <ul><li><span>Пахви</span><span>Z—02</span></li><li><span>Глибоке бікіні</span><span>Z—03</span></li><li><span>Гомілки</span><span>Z—01</span></li></ul>
+        <p class="desc">Щоб забути про бритву і влітку, і взимку. Оптимальне співвідношення ціни й ефекту.</p>
+        <div class="btm"><div class="price"><small>From / session</small>[0000] ₴</div>
+          <button class="btn btn-o set-pick" data-z="SET M" style="min-height:48px;padding:0 20px">Обрати</button></div>
+      </article>
+      <article class="set hot rv d2">
+        <span class="badge mono">Most chosen</span>
+        <div class="nm mono"><span>Set — Total</span><span>~75 min</span></div>
+        <div class="size">L</div>
+        <ul><li><span>Пахви + глибоке бікіні</span><span>Z—02/03</span></li><li><span>Ноги повністю</span><span>Z—01</span></li><li><span>Обличчя</span><span>Z—04</span></li></ul>
+        <p class="desc">Повний reset. Один візит — усе тіло в одному протоколі. Найнижча ціна за зону.</p>
+        <div class="btm"><div class="price"><small>From / session</small>[0000] ₴</div>
+          <button class="btn btn-k set-pick" data-z="SET L" style="min-height:48px;padding:0 20px">Обрати</button></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03 HARDWARE ===================== -->
+<section class="sec" id="hardware" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-idx mono rv">03 — Hardware</div>
+      <h2 class="sec-title rv d1">The <span class="out">machine</span></h2>
+    </div>
+    <div class="hw">
+      <div class="hw-vis rv">
+        <div style="--img:url('https://images.unsplash.com/photo-1774016591149-747273cb11c0?w=1600&q=80&auto=format&fit=crop')" class="ph" role="img" aria-label="Фото апарата на чорному фоні"><div class="cross"></div><div class="ph-label mono" style="bottom:120px"><span>[Photo / device — black seamless]</span><span>16:9</span></div></div>
+        <div class="rings" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
+        <div class="hw-name mono"><span>[Diode Triple Wave]</span><span>Class 4 — Medical</span></div>
+        <div class="wl" role="group" aria-label="Оберіть довжину хвилі">
+          <button aria-pressed="true" data-w="0"><span class="mono">Alex</span><b>755 nm</b></button>
+          <button aria-pressed="false" data-w="1"><span class="mono">Diode</span><b>810 nm</b></button>
+          <button aria-pressed="false" data-w="2"><span class="mono">Nd:YAG</span><b>1064 nm</b></button>
+        </div>
+      </div>
+      <div class="hw-info">
+        <div class="hw-panel rv d1">
+          <span class="mono" style="color:var(--fg-3)">Selected wavelength</span>
+          <h3 id="wl-title" style="margin-top:12px">755 nm</h3>
+          <p class="wl-text" id="wl-text" aria-live="polite">Максимальне поглинання меланіном. Працює зі світлим і тонким волоссям, яке не бере звичайний діод.</p>
+          <div class="spec">
+            <div>Pulse</div><div>[10–400 ms]</div>
+            <div>Spot</div><div>[12×20 mm]</div>
+            <div>Cooling</div><div>[-4°C] sapphire</div>
+            <div>Phototypes</div><div>I — VI</div>
+            <div>Certified</div><div>[CE / FDA]</div>
+          </div>
+        </div>
+        <div class="principles rv d2">
+          <div class="pr"><span class="mono">01</span><div><h4>Selective photothermolysis</h4><p>Енергія поглинається меланіном фолікула, а не шкірою. Опік виключений при правильних параметрах.</p></div></div>
+          <div class="pr"><span class="mono">02</span><div><h4>Active cooling</h4><p>Сапфірове вікно охолоджує епідерміс до, під час і після імпульсу.</p></div></div>
+          <div class="pr"><span class="mono">03</span><div><h4>Controlled protocol</h4><p>Параметри під фототип і зону фіксуються в картці. Кожен сеанс відтворюваний.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 04 BENTO ===================== -->
+<section class="sec light" id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-idx mono rv">04 — Why ÉLÉRA</div>
+      <h2 class="sec-title rv d1">Engineered <span class="out">for</span> result</h2>
+      <p class="sec-lead rv d2">П'ять причин, чому тут не «пробують», а прибирають волосся.</p>
+    </div>
+    <div class="bento">
+      <article class="b b-a rv">
+        <div style="--img:url('https://images.unsplash.com/photo-1791099194889-4bc9ff6a1ddc?w=1400&q=80&auto=format&fit=crop')" class="ph" aria-hidden="true"><div class="cross"></div></div>
+        <div class="tags"><span>Wavelength: 755/810/1064</span><span>Pulse: [10–400 ms]</span></div>
+        <div>
+          <span class="mono k">A / Technology</span>
+          <h3 style="font-size:clamp(44px,5.4vw,88px);margin:12px 0 18px">Precision<br>light.</h3>
+          <p>Лазер нагріває лише меланін у фолікулі — шкіра навколо залишається неушкодженою. Один протокол під твій фототип, нуль імпровізації.</p>
+        </div>
+      </article>
+      <article class="b b-b rv d1">
+        <div style="display:flex;justify-content:space-between;align-items:start;gap:12px"><span class="mono k">B / Safety</span><div class="tags"><span>Certified: [CE/FDA]</span><span>Patch test: always</span></div></div>
+        <div><h3>Medical grade.</h3><p style="margin-top:12px">Сертифікований апарат, огляд перед курсом, тест-спалах на кожній новій зоні. Одноразові матеріали, стерилізація після кожного клієнта.</p></div>
+      </article>
+      <article class="b b-c rv d2">
+        <span class="mono k">C / Comfort</span>
+        <div><div class="big">[-4]<small>°C</small></div><h3 style="font-size:24px;margin-top:14px">Cold touch.</h3><p style="margin-top:6px;font-size:14px">Ти відчуваєш тепло, а не опік.</p></div>
+      </article>
+      <article class="b b-d rv d3">
+        <span class="mono k">D / Speed</span>
+        <div><div class="big">10<small>min</small></div><h3 style="font-size:24px;margin-top:14px">Fast lane.</h3><p style="margin-top:6px;font-size:14px">Пахви — 10 хв. Ноги повністю — до 40.</p></div>
+      </article>
+      <article class="b b-e rv">
+        <div style="flex:1 1 320px;display:flex;flex-direction:column;gap:14px">
+          <span class="mono" style="color:#2a4a5c">E / Result</span>
+          <h3 style="font-size:clamp(36px,4.4vw,68px)">Long-term<br>reduction.</h3>
+          <p style="max-width:460px">Після повного курсу більшість фолікулів перестають виробляти волосся. Ті, що лишаються, — тонкі й світлі.</p>
+        </div>
+        <div class="nums">
+          <div><b>[90]%</b><span class="mono">Hair reduction*</span></div>
+          <div><b>6–10</b><span class="mono">Sessions</span></div>
+          <div><b>4–8</b><span class="mono">Weeks interval</span></div>
+          <div><b>1–2</b><span class="mono">Maintenance / yr</span></div>
+        </div>
+      </article>
+    </div>
+    <p class="mono" style="color:#5c5c5c;margin-top:16px">* до — залежить від зони, типу волосся й гормонального фону. Уточніть цифру за даними вашого апарата.</p>
+  </div>
+</section>
+
+<!-- ===================== 05 TEAM ===================== -->
+<section class="sec" id="team">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-idx mono rv">05 — Specialists</div>
+      <h2 class="sec-title rv d1">Hands <span class="out">behind</span> the light</h2>
+      <p class="sec-lead rv d2">Медична освіта, сертифікація від виробника апарата й сотні годин практики. Ніяких стажерів на клієнтах.</p>
+    </div>
+    <div class="team">
+      <article class="member rv">
+        <div style="--img:url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=900&q=80&auto=format&fit=crop')" class="ph" role="img" aria-label="Портрет спеціаліста"><div class="cross"></div><div class="ph-label mono"><span>[Portrait / B&amp;W]</span><span>3:4</span></div></div>
+        <div class="row"><h3>[Ім'я Прізвище]</h3><span class="role mono">Лікар-дерматолог</span></div>
+        <p>Консультації, визначення фототипу й протоколу, складні випадки.</p>
+        <div class="chips"><span>[00] years</span><span>Dermatology</span></div>
+      </article>
+      <article class="member rv d1">
+        <div style="--img:url('https://images.unsplash.com/photo-1517462964-21fdcec3f25b?w=900&q=80&auto=format&fit=crop')" class="ph" role="img" aria-label="Портрет спеціаліста"><div class="cross"></div><div class="ph-label mono"><span>[Portrait / B&amp;W]</span><span>3:4</span></div></div>
+        <div class="row"><h3>[Ім'я Прізвище]</h3><span class="role mono">Лазерний терапевт</span></div>
+        <p>Проводить процедури на всіх зонах, включно з делікатними.</p>
+        <div class="chips"><span>[0000]+ procedures</span><span>Certified</span></div>
+      </article>
+      <article class="member rv d2">
+        <div style="--img:url('https://images.unsplash.com/photo-1578741837908-b9cfb8a0c60c?w=900&q=80&auto=format&fit=crop')" class="ph" role="img" aria-label="Портрет спеціаліста"><div class="cross"></div><div class="ph-label mono"><span>[Portrait / B&amp;W]</span><span>3:4</span></div></div>
+        <div class="row"><h3>[Ім'я Прізвище]</h3><span class="role mono">Лазерний терапевт</span></div>
+        <p>Спеціалізація — чоловіча епіляція та великі зони.</p>
+        <div class="chips"><span>[00] years</span><span>Men's zones</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 06 PRICE ===================== -->
+<section class="sec light" id="price">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-idx mono rv">06 — Price list</div>
+      <h2 class="sec-title rv d1">Clear <span class="out">numbers</span></h2>
+    </div>
+    <div class="price-wrap">
+      <aside class="price-side rv">
+        <p>Ціна фіксована за зону, без доплат за «складність». Курс оплачується посеансно або одразу — зі знижкою.</p>
+        <div class="seg" role="group" aria-label="Тип оплати">
+          <button aria-pressed="true" data-m="one">1 сеанс</button>
+          <button aria-pressed="false" data-m="course">Курс ×6</button>
+        </div>
+        <p class="mono" id="price-mode" style="color:#5c5c5c">Ціна за один сеанс</p>
+        <a href="#book" class="btn btn-k" style="align-self:flex-start">Записатись
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+      </aside>
+      <div class="ptable rv d1">
+        <div class="pgroup">
+          <h4 class="mono"><span>Face</span><span>UAH</span></h4>
+          <div class="prow"><span class="n">Верхня губа</span><span class="t mono">5 min</span><span class="v" data-one="[000] ₴" data-course="[0000] ₴">[000] ₴</span></div>
+          <div class="prow"><span class="n">Підборіддя</span><span class="t mono">5 min</span><span class="v" data-one="[000] ₴" data-course="[0000] ₴">[000] ₴</span></div>
+          <div class="prow"><span class="n">Обличчя повністю</span><span class="t mono">15 min</span><span class="v" data-one="[000] ₴" data-course="[0000] ₴">[000] ₴</span></div>
+        </div>
+        <div class="pgroup">
+          <h4 class="mono"><span>Body</span><span>UAH</span></h4>
+          <div class="prow"><span class="n">Пахви</span><span class="t mono">10 min</span><span class="v" data-one="[000] ₴" data-course="[0000] ₴">[000] ₴</span></div>
+          <div class="prow"><span class="n">Руки повністю</span><span class="t mono">20 min</span><span class="v" data-one="[000] ₴" data-course="[0000] ₴">[000] ₴</span></div>
+          <div class="prow"><span class="n">Гомілки</span><span class="t mono">20 min</span><span class="v" data-one="[000] ₴" data-course="[0000] ₴">[000] ₴</span></div>
+          <div class="prow"><span class="n">Ноги повністю</span><span class="t mono">40 min</span><span class="v" data-one="[0000] ₴" data-course="[00000] ₴">[0000] ₴</span></div>
+        </div>
+        <div class="pgroup">
+          <h4 class="mono"><span>Bikini</span><span>UAH</span></h4>
+          <div class="prow"><span class="n">Класичне бікіні</span><span class="t mono">15 min</span><span class="v" data-one="[000] ₴" data-course="[0000] ₴">[000] ₴</span></div>
+          <div class="prow"><span class="n">Глибоке бікіні</span><span class="t mono">20 min</span><span class="v" data-one="[000] ₴" data-course="[0000] ₴">[000] ₴</span></div>
+        </div>
+        <div class="pgroup">
+          <h4 class="mono"><span>Sets</span><span>UAH</span></h4>
+          <div class="prow"><span class="n">SET S — Essential</span><span class="t mono">30 min</span><span class="v" data-one="[0000] ₴" data-course="[00000] ₴">[0000] ₴</span></div>
+          <div class="prow"><span class="n">SET M — Daily</span><span class="t mono">45 min</span><span class="v" data-one="[0000] ₴" data-course="[00000] ₴">[0000] ₴</span></div>
+          <div class="prow"><span class="n">SET L — Total</span><span class="t mono">75 min</span><span class="v" data-one="[0000] ₴" data-course="[00000] ₴">[0000] ₴</span></div>
+        </div>
+        <p class="pnote mono">Консультація + тест-спалах — 0 ₴</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 07 REVIEWS ===================== -->
+<section class="sec" id="reviews">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-idx mono rv">07 — Reviews</div>
+      <h2 class="sec-title rv d1">Said <span class="out">after</span> course</h2>
+    </div>
+    <div class="rev-top rv">
+      <p class="mono" style="color:var(--fg-3)">[0.0] / 5 — Google · [000] відгуків</p>
+      <div class="rev-nav">
+        <button id="rev-prev" aria-label="Попередній відгук"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 8H2M7 3L2 8l5 5"/></svg></button>
+        <button id="rev-next" aria-label="Наступний відгук"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></button>
+      </div>
+    </div>
+    <!-- Вставте реальні відгуки клієнтів (з їхньої згоди) замість текстів у квадратних дужках -->
+    <div class="rev-track rv" id="rev-track" tabindex="0" aria-label="Відгуки клієнтів, прокрутка">
+      <article class="rev wide-q">
+        <q class="ph-text">[Реальний відгук клієнтки: що турбувало до курсу, як пройшли сеанси, який результат.]</q>
+        <div class="who"><div class="ava ph light" aria-hidden="true"></div><div><b>[Ім'я]</b><span class="mono">Set L · [6] sessions</span></div>
+          <div class="stars" aria-label="5 з 5"><svg width="80" height="14" viewBox="0 0 80 14" fill="currentColor" aria-hidden="true"><g id="s"><path d="M7 0l2 4.5 5 .5-3.8 3.3 1.1 4.9L7 10.6 2.7 13.2l1.1-4.9L0 5l5-.5z"/></g><use href="#s" x="16"/><use href="#s" x="32"/><use href="#s" x="48"/><use href="#s" x="64"/></svg></div></div>
+      </article>
+      <article class="rev">
+        <q class="ph-text">[Відгук про комфорт процедури та охолодження.]</q>
+        <div class="who"><div class="ava ph" aria-hidden="true"></div><div><b>[Ім'я]</b><span class="mono">Пахви · [4] sessions</span></div></div>
+      </article>
+      <article class="rev">
+        <q class="ph-text">[Відгук про сервіс, атмосферу студії та спеціаліста.]</q>
+        <div class="who"><div class="ava ph" aria-hidden="true"></div><div><b>[Ім'я]</b><span class="mono">Глибоке бікіні · [8] sessions</span></div></div>
+      </article>
+      <article class="rev">
+        <q class="ph-text">[Відгук клієнта-чоловіка про спину або обличчя.]</q>
+        <div class="who"><div class="ava ph" aria-hidden="true"></div><div><b>[Ім'я]</b><span class="mono">Спина · [6] sessions</span></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 08 FAQ ===================== -->
+<section class="sec" id="faq" style="padding-top:0">
+  <div class="wrap faq">
+    <div style="grid-column:1/4" class="faq-side">
+      <div class="sec-idx mono rv" style="margin-bottom:20px">08 — FAQ</div>
+      <h2 class="rv d1" style="font-size:clamp(40px,4.6vw,72px);font-weight:900;letter-spacing:-.06em;line-height:.88;text-transform:uppercase;margin-bottom:32px">No&nbsp;fluff<br>answers</h2>
+    </div>
+    <div class="faq-list rv d1">
+      <div class="qa open">
+        <button aria-expanded="true"><span class="mono">01</span><span class="q">Скільки потрібно сеансів?</span><span class="pm" aria-hidden="true"></span></button>
+        <div class="ans"><div><p>Зазвичай 6–10 з інтервалом 4–8 тижнів. Точну кількість визначає спеціаліст після огляду: вона залежить від зони, гормонального фону й типу волосся.</p></div></div>
+      </div>
+      <div class="qa">
+        <button aria-expanded="false"><span class="mono">02</span><span class="q">Чи це боляче?</span><span class="pm" aria-hidden="true"></span></button>
+        <div class="ans"><div><p>Відчуття — короткий теплий поштовх. Охолодження наконечника знімає більшість дискомфорту, анестезія не потрібна.</p></div></div>
+      </div>
+      <div class="qa">
+        <button aria-expanded="false"><span class="mono">03</span><span class="q">Як підготуватися?</span><span class="pm" aria-hidden="true"></span></button>
+        <div class="ans"><div><p>За 2 тижні — без засмаги й солярію. За 4 тижні — без воску, шугарингу й епілятора. За 24 години — поголити зону. У день процедури — без кремів і дезодоранту.</p></div></div>
+      </div>
+      <div class="qa">
+        <button aria-expanded="false"><span class="mono">04</span><span class="q">Протипоказання</span><span class="pm" aria-hidden="true"></span></button>
+        <div class="ans"><div><p>Вагітність і лактація, онкологічні захворювання, активні запалення чи пошкодження шкіри в зоні, свіжа засмага, фотосенсибілізуючі препарати, епілепсія, декомпенсований діабет. Остаточне рішення — на консультації з лікарем.</p></div></div>
+      </div>
+      <div class="qa">
+        <button aria-expanded="false"><span class="mono">05</span><span class="q">Чи підходить для світлого волосся?</span><span class="pm" aria-hidden="true"></span></button>
+        <div class="ans"><div><p>Темне й русяве волосся — так. Дуже світле, сиве й руде містить мало меланіну, тому ефект слабший. Чесно скажемо на консультації, чи варто починати.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 09 BOOKING ===================== -->
+<section class="sec" id="book" style="padding-top:0">
+  <div class="wrap book">
+    <div class="book-l">
+      <div>
+        <div class="sec-idx mono rv" style="margin-bottom:24px">09 — Booking</div>
+        <h2 class="rv d1">Ready<br><span class="out">when</span><br>you are.</h2>
+        <p class="rv d2">Залиш заявку — адміністратор зв'яжеться протягом 15 хвилин, підбере час і зону. Перша консультація та тест-спалах — безкоштовно.</p>
+      </div>
+      <div class="contacts rv">
+        <div><span class="mono">Address</span><span class="v">[Київ, вул. Адреса, 00]</span></div>
+        <div><span class="mono">Hours</span><span class="v">Mon–Sun · 09:00–21:00</span></div>
+        <div><span class="mono">Phone</span><a href="tel:+380000000000">[+380 00 000 00 00]</a></div>
+        <div><span class="mono">Social</span><a href="#">Instagram</a> / <a href="#">Telegram</a></div>
+      </div>
+    </div>
+
+    <form class="form rv d1" id="form" novalidate>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span class="mono" style="color:var(--fg-3)">Online booking</span><span class="mono" style="color:var(--fg-2);display:inline-flex;gap:8px;align-items:center"><i class="dot"></i>Reply ~15 min</span></div>
+      <div class="two">
+        <div class="fld"><label for="f-name" class="mono">Name / Ім'я</label><input id="f-name" name="name" autocomplete="given-name" placeholder="Ваше ім'я" required></div>
+        <div class="fld"><label for="f-phone" class="mono">Phone / Телефон</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+380" required></div>
+      </div>
+      <div class="fld">
+        <span class="lbl mono" id="zl">Zone / Зона</span>
+        <div class="pills" role="group" aria-labelledby="zl" id="pills">
+          <button type="button" class="pill-b" data-z="Обличчя" aria-pressed="false">Обличчя</button>
+          <button type="button" class="pill-b" data-z="Пахви" aria-pressed="false">Пахви</button>
+          <button type="button" class="pill-b" data-z="Глибоке бікіні" aria-pressed="false">Глибоке бікіні</button>
+          <button type="button" class="pill-b" data-z="Ноги" aria-pressed="false">Ноги</button>
+          <button type="button" class="pill-b" data-z="Руки" aria-pressed="false">Руки</button>
+          <button type="button" class="pill-b" data-z="Спина / Живіт" aria-pressed="false">Спина / Живіт</button>
+          <button type="button" class="pill-b" data-z="SET S" aria-pressed="false">SET S</button>
+          <button type="button" class="pill-b" data-z="SET M" aria-pressed="false">SET M</button>
+          <button type="button" class="pill-b" data-z="SET L" aria-pressed="false">SET L</button>
+          <button type="button" class="pill-b" data-z="Консультація" aria-pressed="false">Не знаю — консультація</button>
+        </div>
+      </div>
+      <div class="two">
+        <div class="fld"><label for="f-date" class="mono">Date / Дата</label><input id="f-date" name="date" type="date"></div>
+        <div class="fld"><label for="f-time" class="mono">Time / Час</label>
+          <select id="f-time" name="time"><option>Будь-який</option><option>09:00 — 12:00</option><option>12:00 — 15:00</option><option>15:00 — 18:00</option><option>18:00 — 21:00</option></select></div>
+      </div>
+      <label class="chk"><input type="checkbox" id="f-ok" checked> Погоджуюсь на обробку персональних даних</label>
+      <p class="err" id="err" role="alert"></p>
+      <button type="submit" class="btn btn-w submit">Надіслати заявку
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></button>
+
+      <div class="done" aria-live="polite">
+        <span class="mono" style="color:#555">Status — 200 OK</span>
+        <div><h3>Request<br>received.</h3><p id="done-text">Ми зателефонуємо протягом 15 хвилин.</p></div>
+        <button type="button" class="btn btn-k" id="again" style="align-self:flex-start">Нова заявка</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot">
+  <div class="wrap foot-row mono">
+    <div class="c1"><span>ÉLÉRA Laser Studio</span><span style="color:var(--fg-2);text-transform:none;letter-spacing:0;font-family:var(--sans);font-size:14px;max-width:320px">Лазерна епіляція медичного класу. Чисто. Точно. Без компромісів.</span></div>
+    <div class="c2"><span>Menu</span><a href="#zones">Зони</a><a href="#price">Прайс</a><a href="#faq">FAQ</a></div>
+    <div class="c3"><span>Social</span><a href="#">Instagram</a><a href="#">Telegram</a></div>
+    <div class="c4"><span>© 2026 ÉLÉRA</span><a href="#">Політика конфіденційності</a><a href="#top">Back to top ↑</a></div>
+  </div>
+  <div class="wordmark" aria-hidden="true">ÉLÉRA</div>
+</footer>
+
+<script>
+(function(){
+  const $ = (s,r=document)=>r.querySelector(s), $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+
+  /* header: blur on scroll, hide on scroll down */
+  const hdr = $('#hdr'); let lastY = 0;
+  addEventListener('scroll',()=>{
+    const y = scrollY;
+    hdr.classList.toggle('scrolled', y > 20);
+    hdr.classList.toggle('hide', y > 400 && y > lastY && !document.body.classList.contains('menu-open'));
+    lastY = y;
+  },{passive:true});
+
+  /* mobile menu */
+  const burger = $('#burger'), mnav = $('#mnav');
+  const setMenu = open => {
+    document.body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? 'Закрити меню' : 'Відкрити меню');
+    mnav.setAttribute('aria-hidden', !open);
+  };
+  burger.addEventListener('click',()=>setMenu(!document.body.classList.contains('menu-open')));
+  $$('#mnav a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+  addEventListener('keydown',e=>{ if(e.key==='Escape') setMenu(false); });
+
+  /* reveal on scroll */
+  const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+  $$('.rv').forEach(el=>io.observe(el));
+
+  /* zones filter */
+  $$('.tab').forEach(t=>t.addEventListener('click',()=>{
+    $$('.tab').forEach(x=>x.setAttribute('aria-pressed', x===t));
+    const f = t.dataset.f;
+    $$('.zone').forEach(z=>z.classList.toggle('off', f!=='all' && z.dataset.c!==f));
+  }));
+
+  /* selected zones — shared between cards and the form */
+  const picked = new Set();
+  const sync = () => {
+    $$('[data-z]').forEach(b=>{
+      const on = picked.has(b.dataset.z);
+      if(b.classList.contains('add')){ b.classList.toggle('on',on); b.setAttribute('aria-pressed',on); }
+      if(b.classList.contains('pill-b')) b.setAttribute('aria-pressed',on);
+      if(b.classList.contains('set-pick')) b.textContent = on ? 'Обрано ✓' : 'Обрати';
+    });
+  };
+  const toggle = z => { picked.has(z) ? picked.delete(z) : picked.add(z); sync(); };
+  $$('.add, .pill-b').forEach(b=>b.addEventListener('click',()=>toggle(b.dataset.z)));
+  $$('.set-pick').forEach(b=>b.addEventListener('click',()=>{
+    ['SET S','SET M','SET L'].forEach(s=>s!==b.dataset.z && picked.delete(s));
+    toggle(b.dataset.z);
+    if(picked.has(b.dataset.z)) setTimeout(()=>$('#book').scrollIntoView({behavior:'smooth'}),250);
+  }));
+
+  /* wavelength switcher */
+  const WL = [
+    ['755 nm','Максимальне поглинання меланіном. Працює зі світлим і тонким волоссям, яке не бере звичайний діод.'],
+    ['810 nm','Універсальна глибина проникнення. Основна робоча хвиля для більшості зон і фототипів II–IV.'],
+    ['1064 nm','Найглибше проникнення з мінімальним поглинанням шкірою. Безпечний режим для смаглявої та засмаглої шкіри.']
+  ];
+  const wlT = $('#wl-title'), wlX = $('#wl-text');
+  $$('.wl button').forEach(b=>b.addEventListener('click',()=>{
+    $$('.wl button').forEach(x=>x.setAttribute('aria-pressed', x===b));
+    const [t,x] = WL[+b.dataset.w];
+    wlX.style.opacity = 0;
+    setTimeout(()=>{ wlT.textContent = t; wlX.textContent = x; wlX.style.opacity = 1; },180);
+  }));
+
+  /* price mode */
+  $$('.seg button').forEach(b=>b.addEventListener('click',()=>{
+    $$('.seg button').forEach(x=>x.setAttribute('aria-pressed', x===b));
+    const m = b.dataset.m;
+    $$('.prow .v').forEach(v=>v.textContent = v.dataset[m]);
+    $('#price-mode').textContent = m==='one' ? 'Ціна за один сеанс' : 'Ціна за курс із 6 сеансів, зі знижкою [−20]%';
+  }));
+
+  /* reviews slider */
+  const track = $('#rev-track');
+  const step = () => track.querySelector('.rev').getBoundingClientRect().width + 16;
+  $('#rev-prev').addEventListener('click',()=>track.scrollBy({left:-step(),behavior:'smooth'}));
+  $('#rev-next').addEventListener('click',()=>track.scrollBy({left: step(),behavior:'smooth'}));
+
+  /* faq accordion */
+  $$('.qa button').forEach(b=>b.addEventListener('click',()=>{
+    const qa = b.parentElement, open = !qa.classList.contains('open');
+    $$('.qa').forEach(x=>{ x.classList.remove('open'); x.querySelector('button').setAttribute('aria-expanded','false'); });
+    if(open){ qa.classList.add('open'); b.setAttribute('aria-expanded','true'); }
+  }));
+
+  /* form */
+  const form = $('#form'), err = $('#err');
+  const d = $('#f-date'); d.min = new Date().toISOString().slice(0,10);
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const name = $('#f-name').value.trim(), phone = $('#f-phone').value.replace(/\D/g,'');
+    if(!name){ err.textContent = 'Вкажіть ім\'я'; $('#f-name').focus(); return; }
+    if(phone.length < 10){ err.textContent = 'Вкажіть телефон повністю'; $('#f-phone').focus(); return; }
+    if(!$('#f-ok').checked){ err.textContent = 'Потрібна згода на обробку даних'; return; }
+    err.textContent = '';
+    /* TODO: тут відправка заявки у CRM / Telegram-бот */
+    const zones = [...picked].join(', ') || 'консультація';
+    $('#done-text').textContent = name + ', ми зателефонуємо протягом 15 хвилин. Обрано: ' + zones + '.';
+    form.classList.add('sent');
+  });
+  $('#again').addEventListener('click',()=>{ form.reset(); picked.clear(); sync(); form.classList.remove('sent'); });
+})();
+</script>
+</body>
+</html>
